@@ -7,16 +7,13 @@ module Fluent
       require 'resque'
     end
 
-    config_param :tag,          :string,  :default => nil
+    config_param :tag,          :string
     config_param :host,         :string,  :default => '127.0.0.1'
     config_param :port,         :integer, :default => 6379
     config_param :run_interval, :time,    :default => 60
 
     def configure(conf)
       super
-      if !@tag
-        raise ConfigError, "'tag' option is required on exec input"
-      end
       Resque.redis = "#{@host}:#{@port}"
     end
 
@@ -43,12 +40,9 @@ module Fluent
         resque_stat = Resque.info
         record = {}
         resque_stat.each { |key, value| record[key.to_s] = value }
-        tag = @tag
-        if tag
-          Engine.emit(tag, Engine.now, record)
-        end
+        Engine.emit(@tag, Engine.now, record)
       rescue => e
-        $log.error "exec failed to emit", :error=>$!.to_s, :line => e.message
+        $log.error "rescue_stat failed to emit", :error => $!.to_s, :line => e.message
         $log.warn_backtrace $!.backtrace
       end
     end
