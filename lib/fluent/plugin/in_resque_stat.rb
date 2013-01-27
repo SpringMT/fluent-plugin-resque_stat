@@ -42,7 +42,7 @@ module Fluent
       begin
         resque_stat = Resque.info
         record = {}
-        record = resque_stat.each { |key, value| record[key.to_s] = value }
+        resque_stat.each { |key, value| record[key.to_s] = value }
         tag = @tag
         if tag
           Engine.emit(tag, Engine.now, record)

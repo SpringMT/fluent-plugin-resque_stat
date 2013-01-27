@@ -23,7 +23,7 @@ describe Fluent::ResqueStatInput do
       emits = d.emits
       emits.length.should > 0
       emits[0][0].should eql('test')
-      emits[0][2].keys.should eql([:pending, :processed, :queues, :workers, :working, :failed, :servers, :environment])
+      emits[0][2].keys.should eql(['pending', 'processed', 'queues', 'workers', 'working', 'failed', 'servers', 'environment'])
     end
   end
 
