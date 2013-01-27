@@ -1,19 +1,6 @@
 # Fluent::Plugin::ResqueStat [![Build Status](https://travis-ci.org/SpringMT/fluent-plugin-resque_stat.png)](https://travis-ci.org/SpringMT/fluent-plugin-resque_stat)
 
-## Configuration
-
-```
-<source>
-  type resque_stat
-  tag resque
-  host 127.0.0.1
-  port 6379
-  run_interval 1s
- </source>
-```
-## Output Format
-
-{:pending=>0, :processed=>46, :queues=>1, :workers=>0, :working=>0, :failed=>0, :servers=>["redis://:6379/0"], :environment=>"development"}
+Fluent input plugin for Resque info
 
 ## Installation
 
@@ -29,7 +16,36 @@ Or install it yourself as:
 
     $ gem install fluent-plugin-resque_stat
 
-## Usage
+## Configuration
+
+```
+<source>
+  type resque_stat
+  tag resque
+  host 127.0.0.1
+  port 6379
+  run_interval 1s
+ </source>
+```
+## Output Format
+
+Sample  
+{:pending=>0, :processed=>46, :queues=>1, :workers=>0, :working=>0, :failed=>0, :servers=>["redis://:6379/0"], :environment=>"development"}  
+
+Record  
+
+```json
+{
+  "pending": 0,
+  "processed": 46,
+  "queues": 1,
+  "workers": 0,
+  "working": 0,
+  "failed": 0,
+  "servers": "[\"redis://:6379/0\"]",
+  "environment": "development"
+}
+```
 
 ## Contributing
 
