@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'fluent-plugin-resque-stat/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "fluent-plugin-resque-stat"
+  gem.name          = "fluent-plugin-resque_stat"
   gem.version       = "0.0.1"
   gem.authors       = ["Spring_MT"]
   gem.email         = ["today.is.sky.blue.sky@gmail.com"]
@@ -18,8 +17,8 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency = "resque", "~> 1.22"
-
+  gem.add_dependency "resque", "~> 1.22"
+  gem.add_dependency "fluentd"
   gem.description = <<description
 
 description

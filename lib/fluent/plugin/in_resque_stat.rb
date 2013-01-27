@@ -7,59 +7,46 @@ module Fluent
       require 'resque'
     end
 
-    def initialize
-      super
-    end
-
-    config_param :tag,          :string
+    config_param :tag,          :string,  :default => nil
     config_param :host,         :string,  :default => '127.0.0.1'
     config_param :port,         :integer, :default => 6379
-    config_param :run_interval, :integer, :default => 60
+    config_param :run_interval, :time,    :default => 60
 
     def configure(conf)
       super
+      if !@tag
+        raise ConfigError, "'tag' option is required on exec input"
+      end
       Resque.redis = "#{@hosts}:#{@port}"
     end
 
     def start
-      if @run_interval
-        @finished = false
-        @thread = Thread.new(&method(:run_redis_stat))
-      else
-        @thread = Thread.new(&method(:run))
-      end
+      @finished = false
+      @thread = Thread.new(&method(:run_resque_stat))
     end
 
     def shutdown
-      if @run_interval
-        @finished = true
-        @thread.join
-      else
-        @thread.join
-      end
+      @finished = true
+      @thread.join
     end
 
-    def run
-      redis_each_line
-    end
-
-    def run_redis_stat
+    def run_resque_stat
       until @finished
         sleep @run_interval
-        redis_each_line
+        resque_each_line
       end
     end
 
     private
-    def redis_each_line
+    def resque_each_line
       begin
-        record = Redis.info
+        record = Resque.info
         tag    = @tag
         if tag
           Engine.emit(tag, Engine.now, record)
         end
-      rescue
-        $log.error "exec failed to emit", :error=>$!.to_s, :line=>line
+      rescue => e
+        $log.error "exec failed to emit", :error=>$!.to_s, :line => e.message
         $log.warn_backtrace $!.backtrace
       end
     end
