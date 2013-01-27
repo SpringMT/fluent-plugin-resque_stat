@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
   gem.name          = "fluent-plugin-resque_stat"
-  gem.version       = "0.0.1"
+  gem.version       = "0.0.2"
   gem.authors       = ["Spring_MT"]
   gem.email         = ["today.is.sky.blue.sky@gmail.com"]
   gem.summary       = %q{Fluent input plugin for Resque info}

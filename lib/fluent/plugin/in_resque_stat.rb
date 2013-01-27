@@ -17,7 +17,7 @@ module Fluent
       if !@tag
         raise ConfigError, "'tag' option is required on exec input"
       end
-      Resque.redis = "#{@hosts}:#{@port}"
+      Resque.redis = "#{@host}:#{@port}"
     end
 
     def start
