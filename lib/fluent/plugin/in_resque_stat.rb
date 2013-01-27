@@ -40,8 +40,10 @@ module Fluent
     private
     def resque_each_line
       begin
-        record = Resque.info
-        tag    = @tag
+        resque_stat = Resque.info
+        record = {}
+        record = resque_stat.each { |key, value| record[key.to_s] = value }
+        tag = @tag
         if tag
           Engine.emit(tag, Engine.now, record)
         end
