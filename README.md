@@ -1,4 +1,4 @@
-# Fluent::Plugin::ResqueStat [![Build Status](https://travis-ci.org/SpringMT/fluent-plugin-resque_stat.png)](https://travis-ci.org/SpringMT/fluent-plugin-resque_stat)
+# Fluent::Plugin::ResqueStat, a plugin for [Fluentd](http://fluentd.org) [![Build Status](https://travis-ci.org/SpringMT/fluent-plugin-resque_stat.png)](https://travis-ci.org/SpringMT/fluent-plugin-resque_stat)
 
 Fluent input plugin for Resque info
 
